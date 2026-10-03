@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#141526">
+  <title>Te regalo una pequeña flor</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at center, #35213d, #141526);
+      color: #fff1f7;
+      font-family: Arial, sans-serif;
+    }
+
+    main {
+      width: min(100%, 480px);
+      padding: 28px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: clamp(30px, 8vw, 42px);
+      font-weight: normal;
+    }
+
+    .subtitle {
+      color: #dcc2d2;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 52vh;
+      margin: 10px auto;
+      overflow: visible;
+    }
+
+    .petal {
+      transform-box: view-box;
+      transform-origin: 200px 215px;
+      transition: transform 2.4s ease-in-out;
+    }
+
+    .bloomed .left-petal {
+      transform: rotate(-19deg);
+    }
+
+    .bloomed .right-petal {
+      transform: rotate(19deg);
+    }
+
+    .bloomed .center-petal {
+      transform: translateY(-9px) scaleX(1.08);
+    }
+
+    #message {
+      margin: 14px 0 24px;
+      font-size: 17px;
+      line-height: 1.6;
+      min-height: 55px;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    #message.visible {
+      opacity: 1;
+    }
+
+    button {
+      padding: 15px 28px;
+      border: none;
+      border-radius: 30px;
+      background: #f5afd0;
+      color: #321d30;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 8px 30px #ed7ab52b;
+    }
+
+    button:hover {
+      background: #ffc7e0;
+    }
+
+    button:focus-visible {
+      outline: 3px solid white;
+      outline-offset: 5px;
+    }
+
+    button:disabled {
+      cursor: default;
+    }
+
+    footer {
+      margin-top: 24px;
+      color: #cbb0c1;
+      font-size: 14px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .petal,
+      #message {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Un flor para ti</h1>
+    <p class="subtitle">Espero te guste este pequeño tulipán.</p>
+
+    <svg
+      id="tulip"
+      viewBox="0 0 400 440"
+      role="img"
+      aria-labelledby="flower-title"
+    >
+      <title id="flower-title">Tulipán rosa con tallo y hojas verdes</title>
+
+      <defs>
+        <linearGradient id="stem" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#397858"/>
+          <stop offset="100%" stop-color="#8acb82"/>
+        </linearGradient>
+
+        <linearGradient id="leaf" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0%" stop-color="#30694d"/>
+          <stop offset="100%" stop-color="#91d187"/>
+        </linearGradient>
+
+        <linearGradient id="pink-center" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stop-color="#bd397a"/>
+          <stop offset="100%" stop-color="#ffb5d7"/>
+        </linearGradient>
+
+        <linearGradient id="pink-left" x1="1" y1="1" x2="0" y2="0">
+          <stop offset="0%" stop-color="#ce4389"/>
+          <stop offset="100%" stop-color="#ffc0dd"/>
+        </linearGradient>
+
+        <linearGradient id="pink-right" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0%" stop-color="#b83277"/>
+          <stop offset="100%" stop-color="#ff9bca"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Sombra debajo de la flor -->
+      <ellipse
+        cx="200" cy="410" rx="65" ry="8"
+        fill="#000000" opacity="0.15"
+      />
+
+      <!-- Tallo -->
+      <path
+        d="M200 210 C190 285 215 340 200 405"
+        fill="none"
+        stroke="url(#stem)"
+        stroke-width="9"
+        stroke-linecap="round"
+      />
+
+      <!-- Hoja izquierda -->
+      <path
+        d="M202 365
+           C130 345 104 282 105 245
+           C163 265 193 304 202 365Z"
+        fill="url(#leaf)"
+      />
+
+      <path
+        d="M199 357 Q148 307 111 254"
+        fill="none"
+        stroke="#b5e6a6"
+        stroke-width="1.5"
+        opacity="0.5"
+      />
+
+      <!-- Hoja derecha -->
+      <path
+        d="M202 337
+           C205 284 248 242 295 224
+           C289 284 250 324 202 337Z"
+        fill="url(#leaf)"
+      />
+
+      <path
+        d="M207 331 Q252 280 290 233"
+        fill="none"
+        stroke="#b5e6a6"
+        stroke-width="1.5"
+        opacity="0.5"
+      />
+
+      <!-- Pétalo central -->
+      <path
+        class="petal center-petal"
+        d="M200 220
+           C153 197 151 113 200 62
+           C249 113 247 197 200 220Z"
+        fill="url(#pink-center)"
+      />
+
+      <!-- Pétalo izquierdo -->
+      <path
+        class="petal left-petal"
+        d="M200 220
+           C143 220 125 162 132 90
+           C173 107 203 153 200 220Z"
+        fill="url(#pink-left)"
+      />
+
+      <!-- Pétalo derecho -->
+      <path
+        class="petal right-petal"
+        d="M200 220
+           C257 220 275 162 268 90
+           C227 107 197 153 200 220Z"
+        fill="url(#pink-right)"
+      />
+
+      <!-- Base verde -->
+      <path
+        d="M184 214 Q200 228 216 214 L200 240Z"
+        fill="#599267"
+      />
+    </svg>
+
+    <p id="message" aria-live="polite"></p>
+
+    <button id="bloom-button" type="button">
+      Hazla florecer 🌷
+    </button>
+
+    <footer>Hecha para Hanny. Por Yiro</footer>
+  </main>
+
+  <script>
+    const tulip = document.getElementById("tulip");
+    const button = document.getElementById("bloom-button");
+    const message = document.getElementById("message");
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    let isOpen = false;
+
+    button.addEventListener("click", () => {
+      button.disabled = true;
+
+      if (!isOpen) {
+        tulip.classList.add("bloomed");
+        button.textContent = "Floreciendo…";
+
+        setTimeout(() => {
+          message.textContent =
+            "Siempre pienso mucho en ti, en tu linda sonrisa y en tus ojos que brillan más que las estrellas.";
+
+          message.classList.add("visible");
+          button.textContent = "Volver a florecer 🌷";
+          button.disabled = false;
+          isOpen = true;
+        }, reducedMotion ? 0 : 2400);
+
+      } else {
+        tulip.classList.remove("bloomed");
+        message.classList.remove("visible");
+        button.textContent = "Un momento…";
+
+        setTimeout(() => {
+          button.textContent = "Hazla florecer 🌷";
+          button.disabled = false;
+          isOpen = false;
+        }, reducedMotion ? 0 : 2400);
+      }
+    });
+  </script>
+</body>
+</html>
